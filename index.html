@@ -23,6 +23,26 @@
             min-height: 100vh;
             font-family: Arial, sans-serif;
             touch-action: manipulation;
+            position: relative;
+        }
+        .game-header {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            font-size: 48px;
+            font-weight: bold;
+            color: #333;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin: 0;
+            width: auto;
+            white-space: nowrap;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
         }
         #banana {
             width: 200px;
@@ -93,6 +113,16 @@
         #restart-button:hover {
             background-color: #0b7dda;
         }
+        .powered-by {
+            position: fixed;
+            bottom: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.5);
+            font-style: italic;
+        }
         @keyframes celebrate {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
@@ -100,6 +130,10 @@
         }
 
         @media (max-width: 600px) {
+            .game-header {
+                font-size: 36px;
+                top: 10px;
+            }
             #banana {
                 width: 150px;
                 height: 150px;
@@ -118,9 +152,16 @@
             #game-over {
                 font-size: 20px;
             }
+            .powered-by {
+                font-size: 10px;
+            }
         }
 
         @media (max-width: 400px) {
+            .game-header {
+                font-size: 28px;
+                top: 5px;
+            }
             #banana {
                 width: 120px;
                 height: 120px;
@@ -139,10 +180,14 @@
             #game-over {
                 font-size: 18px;
             }
+            .powered-by {
+                font-size: 9px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="game-header">Click the Banana</div>
     <div class="mode-buttons">
         <button class="mode-button" data-time="15">15 Seconds</button>
         <button class="mode-button" data-time="30">30 Seconds</button>
@@ -156,6 +201,7 @@
     </div>
     <div id="game-over"></div>
     <button id="restart-button">Play Again</button>
+    <div class="powered-by">Powered by Dynamic.IO</div>
 
     <script>
         let clicks = 0;
