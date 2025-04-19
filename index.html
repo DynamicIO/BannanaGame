@@ -32,6 +32,7 @@
             display: none;
             max-width: 80vw;
             max-height: 80vw;
+            object-fit: contain;
         }
         #banana:active {
             transform: scale(0.95);
@@ -148,7 +149,7 @@
         <button class="mode-button" data-time="60">60 Seconds</button>
     </div>
     <div id="timer">60</div>
-    <img id="banana" src="https://cdn-icons-png.flaticon.com/512/1147/1147122.png" alt="Banana">
+    <img id="banana" src="ChatGPT Image Apr 19, 2025, 02_30_27 PM.png" alt="Banana">
     <div id="stats">
         <p>Clicks: <span id="clicks">0</span></p>
         <p>Clicks per minute: <span id="cpm">0</span></p>
@@ -193,13 +194,19 @@
         function resetGame() {
             clicks = 0;
             gameStarted = false;
+            timeLeft = selectedTime;
             clicksDisplay.textContent = '0';
             cpmDisplay.textContent = '0';
             banana.style.display = 'none';
+            banana.style.pointerEvents = 'auto';
             timerDisplay.style.display = 'none';
             gameOverDisplay.style.display = 'none';
             restartButton.style.display = 'none';
             document.querySelector('.mode-buttons').style.display = 'flex';
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
         }
 
         modeButtons.forEach(button => {
