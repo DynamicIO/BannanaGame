@@ -26,6 +26,22 @@
             touch-action: manipulation;
             position: relative;
         }
+        html, body {
+            touch-action: none;
+            overscroll-behavior: none;
+        }
+        /* Prevent zoom on desktop browsers */
+        html {
+            zoom: 1 !important;
+            -moz-transform: scale(1) !important;
+            -moz-transform-origin: 0 0 !important;
+        }
+        body {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
         .game-header {
             position: absolute;
             top: 20px;
@@ -130,6 +146,67 @@
             100% { transform: scale(1); }
         }
 
+        /* Leaderboard Styles */
+        .leaderboard {
+            margin-top: 10px;
+            padding: 10px 8px;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            max-width: 320px;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        .leaderboard h2 {
+            display: none;
+        }
+
+        .leaderboard-modes {
+            display: block;
+        }
+
+        .leaderboard-mode {
+            margin-bottom: 0;
+        }
+
+        .leaderboard-mode h3 {
+            color: #4CAF50;
+            margin-bottom: 8px;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .leaderboard-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 6px;
+            margin-bottom: 4px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 4px;
+            border: 1px solid rgba(0, 0, 0, 0.07);
+        }
+
+        .leaderboard-entry .position {
+            font-size: 13px;
+            margin-right: 5px;
+        }
+
+        .leaderboard-entry .name {
+            flex: 1;
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .leaderboard-entry .score {
+            font-weight: bold;
+            color: #4CAF50;
+            font-size: 13px;
+        }
+
         @media (max-width: 600px) {
             .game-header {
                 font-size: 36px;
@@ -155,6 +232,22 @@
             }
             .powered-by {
                 font-size: 10px;
+            }
+            .leaderboard {
+                margin-top: 8px;
+                padding: 7px 4px;
+                max-width: 98vw;
+                font-size: 12px;
+            }
+            .leaderboard-mode h3 {
+                font-size: 13px;
+            }
+            .leaderboard-entry {
+                padding: 3px 4px;
+                font-size: 12px;
+            }
+            .leaderboard-entry .name, .leaderboard-entry .score, .leaderboard-entry .position {
+                font-size: 12px;
             }
         }
 
@@ -202,6 +295,67 @@
     </div>
     <div id="game-over"></div>
     <button id="restart-button">Play Again</button>
+    
+    <!-- Leaderboard Section -->
+    <div class="leaderboard" id="leaderboard" style="display: none;">
+        <div class="leaderboard-modes">
+            <div class="leaderboard-mode" id="leaderboard-15" style="display: none;">
+                <h3>15 Seconds Leaderboard</h3>
+                <div class="leaderboard-entry">
+                    <span class="position">🥇</span>
+                    <span class="name">Beso</span>
+                    <span class="score">211</span>
+                </div>
+                <div class="leaderboard-entry">
+                    <span class="position">🥈</span>
+                    <span class="name">Mark</span>
+                    <span class="score">186</span>
+                </div>
+                <div class="leaderboard-entry">
+                    <span class="position">🥉</span>
+                    <span class="name">Ariel</span>
+                    <span class="score">169</span>
+                </div>
+            </div>
+            <div class="leaderboard-mode" id="leaderboard-30" style="display: none;">
+                <h3>30 Seconds Leaderboard</h3>
+                <div class="leaderboard-entry">
+                    <span class="position">🥇</span>
+                    <span class="name">TBD</span>
+                    <span class="score">-</span>
+                </div>
+                <div class="leaderboard-entry">
+                    <span class="position">🥈</span>
+                    <span class="name">TBD</span>
+                    <span class="score">-</span>
+                </div>
+                <div class="leaderboard-entry">
+                    <span class="position">🥉</span>
+                    <span class="name">TBD</span>
+                    <span class="score">-</span>
+                </div>
+            </div>
+            <div class="leaderboard-mode" id="leaderboard-60" style="display: none;">
+                <h3>60 Seconds Leaderboard</h3>
+                <div class="leaderboard-entry">
+                    <span class="position">🥇</span>
+                    <span class="name">TBD</span>
+                    <span class="score">-</span>
+                </div>
+                <div class="leaderboard-entry">
+                    <span class="position">🥈</span>
+                    <span class="name">TBD</span>
+                    <span class="score">-</span>
+                </div>
+                <div class="leaderboard-entry">
+                    <span class="position">🥉</span>
+                    <span class="name">TBD</span>
+                    <span class="score">-</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <div class="powered-by">Powered by Dynamic.IO</div>
 
     <script>
@@ -218,6 +372,11 @@
         const gameOverDisplay = document.getElementById('game-over');
         const restartButton = document.getElementById('restart-button');
         const modeButtons = document.querySelectorAll('.mode-button');
+        const leaderboard = document.getElementById('leaderboard');
+        const leaderboard15 = document.getElementById('leaderboard-15');
+        const leaderboard30 = document.getElementById('leaderboard-30');
+        const leaderboard60 = document.getElementById('leaderboard-60');
+
 
         // Create victory sound
         const victorySound = new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YU');
@@ -250,6 +409,10 @@
             gameOverDisplay.style.display = 'none';
             restartButton.style.display = 'none';
             document.querySelector('.mode-buttons').style.display = 'flex';
+            leaderboard.style.display = 'none';
+            leaderboard15.style.display = 'none';
+            leaderboard30.style.display = 'none';
+            leaderboard60.style.display = 'none';
             if (timer) {
                 clearInterval(timer);
                 timer = null;
@@ -264,6 +427,17 @@
                 banana.style.display = 'block';
                 timerDisplay.style.display = 'block';
                 document.querySelector('.mode-buttons').style.display = 'none';
+                leaderboard.style.display = 'block';
+                leaderboard15.style.display = 'none';
+                leaderboard30.style.display = 'none';
+                leaderboard60.style.display = 'none';
+                if (selectedTime === 15) {
+                    leaderboard15.style.display = 'block';
+                } else if (selectedTime === 30) {
+                    leaderboard30.style.display = 'block';
+                } else if (selectedTime === 60) {
+                    leaderboard60.style.display = 'block';
+                }
             });
         });
 
@@ -305,6 +479,43 @@
         }
 
         restartButton.addEventListener('click', resetGame);
+
+        // Prevent double-tap zoom on mobile devices
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Prevent pinch-zoom and gesture zoom on iOS Safari
+        ['gesturestart', 'gesturechange', 'gestureend'].forEach(function(type) {
+            document.addEventListener(type, function(e) {
+                e.preventDefault();
+            }, { passive: false });
+        });
+
+        // Prevent zoom on desktop browsers
+        document.addEventListener('wheel', function(event) {
+            if (event.ctrlKey) {
+                event.preventDefault();
+            }
+        }, { passive: false });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey && (event.key === '+' || event.key === '-' || event.key === '=')) {
+                event.preventDefault();
+            }
+        });
+
+        // Prevent pinch-zoom on all devices
+        document.addEventListener('touchmove', function(event) {
+            if (event.touches && event.touches.length > 1) {
+                event.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html> 
